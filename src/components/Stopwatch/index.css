@@ -1,0 +1,103 @@
+/* Write CSS here */
+.bg-container {
+  background-image: url('https://assets.ccbp.in/frontend/react-js/stopwatch-lg-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  min-height: 100vh;
+  min-width: 100vh;
+  padding: 40px;
+  font-family: Roboto;
+}
+
+.heading {
+  margin-left: 105px;
+  font-size: 50px;
+}
+
+.card {
+  height: 300px;
+  width: 300px;
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 70px;
+}
+
+.timer-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.stopwatch {
+  height: 20px;
+  width: 20px;
+  margin: 5px;
+}
+
+.timer {
+  margin: 5px;
+  font-weight: 550;
+}
+
+.counter {
+  font-size: 50px;
+}
+
+.button {
+  height: 30px;
+  width: 50px;
+  margin: 10px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: 550;
+}
+
+.start {
+  background-color: #1db05f;
+}
+
+.stop {
+  background-color: #ef0d36;
+}
+
+.reset {
+  background-color: #eaa800;
+}
+
+@media (min-width: 576px) {
+  .bg-container {
+    background-image: url('https://assets.ccbp.in/frontend/react-js/stopwatch-lg-bg.png');
+  }
+  .card {
+    max-width: 500px;
+  }
+}
+
+@media (min-width: 768px) {
+  .card {
+    max-width: 600px;
+  }
+}
+
+@media (min-width: 992px) {
+  .card {
+    max-width: 800px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .card {
+    max-width: 900px;
+  }
+}
