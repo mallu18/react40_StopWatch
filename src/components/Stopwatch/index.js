@@ -1,90 +1,108 @@
-// Write your code here
-import './index.css'
 import {Component} from 'react'
 
-class StopWatch extends Component {
+import './index.css'
+
+class Stopwatch extends Component {
   state = {
+    isTimerRunning: false,
     timeElapsedInSeconds: 0,
-    isRunning: false,
   }
 
   componentWillUnmount() {
-    clearInterval(this.timerId)
+    clearTimeout(this.timeInterval)
   }
 
-  startTimer = () => {
-    if (!this.state.isRunning) {
-      this.setState({isRunning: true})
-      this.timerId = setInterval(() => {
-        this.setState(prevState => ({
-          timeElapsedInSeconds: prevState.timeElapsedInSeconds + 1,
-        }))
-      }, 1000)
-    }
-
-    // console.log('Started')
+  onResetTimer = () => {
+    clearInterval(this.timeInterval)
+    this.setState({isTimerRunning: false, timeElapsedInSeconds: 0})
   }
 
-  stopTimer = () => {
-    clearInterval(this.timerId)
-    this.setState({isRunning: false})
-    // console.log('Stopped')
+  onStopTimer = () => {
+    clearInterval(this.timeInterval)
+    this.setState({isTimerRunning: false})
   }
 
-  resetTimer = () => {
-    clearInterval(this.timerId)
-    this.setState({timeElapsedInSeconds: 0, isRunning: false})
-    // console.log('Reset')
+  updateTime = () => {
+    this.setState(prevState => ({
+      timeElapsedInSeconds: prevState.timeElapsedInSeconds + 1,
+    }))
   }
 
-  formatTimer = () => {
+  onStartTimer = () => {
+    this.timeInterval = setInterval(this.updateTime, 1000)
+    this.setState({isTimerRunning: true})
+  }
+
+  renderSeconds = () => {
+    const {timeElapsedInSeconds} = this.state
+    const seconds = Math.floor(timeElapsedInSeconds % 60)
+    return seconds < 10 ? `0${seconds}` : seconds.toString()
+    // .toString()
+    // .padStart(2, '0')
+
+    // if (seconds < 10) {
+    //   return `0${seconds}`
+    // }
+    // return seconds
+  }
+
+  renderMinutes = () => {
     const {timeElapsedInSeconds} = this.state
     const minutes = Math.floor(timeElapsedInSeconds / 60)
-      .toString()
-      .padStart(2, '0')
-    const seconds = Math.floor(timeElapsedInSeconds % 60)
-      .toString()
-      .padStart(2, '0')
-    return `${minutes}:${seconds}`
-    // console.log(`${minutes}:${seconds}`)
+    return minutes < 10 ? `0${minutes}` : minutes.toString()
+    // .toString()
+    // .padStart(2, '0')
+
+    // if (minutes < 10) {
+    //   return `0${minutes}`
+    // }
+    // return minutes
   }
 
   render() {
+    const {isTimerRunning} = this.state
+    // const renderMinutes = this.minutes
+    // const renderSeconds = this.seconds
+    const time = `${this.renderMinutes()}:${this.renderSeconds()}`
+
     return (
-      <div className="bg-container">
-        <h1 className="heading">Stopwatch</h1>
-        <div className="card">
+      <div className="app-container">
+        <div className="stopwatch-container">
+          <h1 className="stopwatch">Stopwatch</h1>
           <div className="timer-container">
-            <img
-              src="https://assets.ccbp.in/frontend/react-js/stopwatch-timer.png"
-              alt="stopwatch"
-              className="stopwatch"
-            />
-            <p className="timer">Timer</p>
-          </div>
-          <h1 className="counter">{this.formatTimer()}</h1>
-          <div className="action-container">
-            <button
-              type="button"
-              className="button start"
-              onClick={this.startTimer}
-            >
-              Start
-            </button>
-            <button
-              type="button"
-              className="button stop"
-              onClick={this.stopTimer}
-            >
-              Stop
-            </button>
-            <button
-              type="button"
-              className="button reset"
-              onClick={this.resetTimer}
-            >
-              Reset
-            </button>
+            <div className="timer">
+              <img
+                className="timer-image"
+                src="https://assets.ccbp.in/frontend/react-js/stopwatch-timer.png"
+                alt="stopwatch"
+              />
+              <p className="timer-text">Timer</p>
+            </div>
+            <h1 className="stopwatch-timer">{time}</h1>
+            <div className="timer-buttons">
+              <button
+                type="button"
+                className="start-button button"
+                onClick={this.onStartTimer}
+                disabled={isTimerRunning}
+              >
+                Start
+              </button>
+              <button
+                type="button"
+                className="stop-button button"
+                onClick={this.onStopTimer}
+              >
+                Stop
+              </button>
+              <button
+                type="button"
+                className="reset-button button"
+                onClick={this.onResetTimer}
+              >
+                Reset
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -92,4 +110,4 @@ class StopWatch extends Component {
   }
 }
 
-export default StopWatch
+export default Stopwatch
